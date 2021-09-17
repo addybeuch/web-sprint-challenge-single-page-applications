@@ -4,6 +4,7 @@ import Pizza from "./_tests_/Pizza"
 import schema from './_tests_/formSchema'
 import * as yup from 'yup';
 import { string } from "yup/lib/locale";
+import PizzaCard from "./_tests_/pizzaCard";
 
 
 
@@ -31,7 +32,7 @@ const App = () => {
 const [pizzas, setPizzas] = useState(initialPizzas)
 const [formValues, setFormValues] = useState(initialFormValues)
 const [formErrors, setFormErrors] = useState(initialFormErrors)
-const [disabled, useDisabled] = useState(initialDisabled)
+const [disabled, setDisabled] = useState(initialDisabled)
 
 const postPizza = newPizza => {
 setPizzas([newPizza, ...pizzas])
@@ -67,7 +68,9 @@ const formSubmit = () => {
   postPizza(newPizza);
 }
 
-
+useEffect(() => {
+  schema.isValid(formValues).then(valid => setDisabled(!valid))
+}, [formValues])
 
 
   return (
@@ -79,16 +82,22 @@ const formSubmit = () => {
         <nav>
             <h1>Lambda Eats</h1>
             <p>Mmmm beenza!</p>
-            <Link id='order-pizza' to='/Pizza'>Order Pizza</Link>
+            <Link id='order-pizza' to='/pizza'>Order Pizza</Link>
         </nav>
         </Route>
-        <Route path={'/Pizza'}>
+        <Route path={'/pizza'}>
           <Pizza
           values={formValues} 
           change={inputChange}
           submit={formSubmit}
           disabled={disabled}
            />
+           {pizzas.map(pizza => {
+             return (
+              <PizzaCard key={pizza.id} details={pizza}/>
+             )
+           })
+           }
           </Route>
       </Switch>
 
