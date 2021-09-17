@@ -5,6 +5,7 @@ import schema from './_tests_/formSchema'
 import * as yup from 'yup';
 import { string } from "yup/lib/locale";
 import PizzaCard from "./_tests_/pizzaCard";
+import axios from 'axios';
 
 
 
@@ -35,8 +36,11 @@ const [formErrors, setFormErrors] = useState(initialFormErrors)
 const [disabled, setDisabled] = useState(initialDisabled)
 
 const postPizza = newPizza => {
-setPizzas([newPizza, ...pizzas])
-setFormValues(initialFormValues);
+axios.post('https://reqres.in/api/orders', newPizza)
+.then(res => {
+  setPizzas([res.data, ...pizzas])
+  setFormValues(initialFormValues);
+}).catch(err => {console.error(err)})
 }
 
 const validate = (name, value) => {

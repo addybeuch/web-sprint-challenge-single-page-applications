@@ -16,9 +16,9 @@ export default function Pizza(props) {
     return (
     <form onSubmit={onSubmit}>
         <h1>Pizza Maker</h1> 
-        <div className='pizza-form'>
+        <div id='pizza-form'>
             <label>Name
-                <input 
+                <input id='name-input'
                     name='name'
                     type='text'
                     value={values.name}
@@ -26,7 +26,7 @@ export default function Pizza(props) {
                 />
             </label>
             <label>Size 
-                <select value={values.size} name="size" onChange={onChange}>
+                <select id='size-dropdown' value={values.size} name="size" onChange={onChange}>
                     <option value='Small'>Small</option>                 
                     <option value='Medium'>Medium</option>
                     <option value='Large'>Large</option>
@@ -67,7 +67,7 @@ export default function Pizza(props) {
                    />
             </label>
             <label>Special Instructions
-                <input 
+                <input id='special-text'
                 name='special'
                 type='text'
                 value={values.special}
